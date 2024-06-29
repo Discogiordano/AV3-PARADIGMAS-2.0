@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "nome": "Malena",
+        "email": "malena@blade.com",
+        "senha": "senha123",
+        "tipo_assinatura": "premium",
+        "preferencias": [
+            "drama",
+            "ação",
+            "comédia"
+        ],
+        "historico": [
+            2,
+            3,
+            4
+        ]
+    },
+    {
+        "id": 2,
+        "nome": "Miquella",
+        "email": "miquella@sacra.com",
+        "senha": "senha321",
+        "tipo_assinatura": "básica",
+        "preferencias": [
+            "ação",
+            "ficção científica",
+            "terror"
+        ],
+        "historico": [
+            1,
+            3
+        ]
+    }
+]
