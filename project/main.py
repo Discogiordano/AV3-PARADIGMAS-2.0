@@ -4,7 +4,9 @@ from usuario_funcoes import (cadastrar_usuario, login_usuario, excluir_usuario, 
 from persistencia import salvar_dados, carregar_dados
 
 def main():
+    print("Carregando dados...")
     usuarios, conteudos, conteudos_2 = carregar_dados()
+    print("Dados carregados com sucesso.")
     usuario_logado = None
 
     while True:

@@ -31,5 +31,16 @@
             1,
             3
         ]
+    },
+
+    {
+        "id": 3,
+        "nome": "Admin",
+        "email": "admin@admin.com",
+        "senha": "admin123",
+        "tipo_assinatura": "premium",
+        "preferencias": [],
+        "historico": [],
+        "tipo_user": "administrador"
     }
 ]
