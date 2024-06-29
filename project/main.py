@@ -4,7 +4,7 @@ from usuario_funcoes import (cadastrar_usuario, login_usuario, excluir_usuario, 
 from persistencia import salvar_dados, carregar_dados
 
 def main():
-    usuarios, conteudos = carregar_dados()
+    usuarios, conteudos, conteudos_2 = carregar_dados()
     usuario_logado = None
 
     while True:
@@ -21,7 +21,8 @@ def main():
         print("10. Alterar Preferências")
         print("11. Ver Histórico")
         print("12. Recomendação por preferência")
-        print("13. Sair")
+        print("13. Listar Conteúdos Premium")
+        print("14. Sair")
         escolha = input("Escolha uma opção: ")
 
         if escolha == '1':
@@ -69,8 +70,11 @@ def main():
                 if id_conteudo in conteudos:
                     adicionar_historico(usuario_logado, id_conteudo)
                     print(f"Assistido: {conteudos[id_conteudo].titulo}")
+                elif usuario_logado.tipo_assinatura == 'premium' and id_conteudo in conteudos_2:
+                    adicionar_historico(usuario_logado, id_conteudo)
+                    print(f"Assistido: {conteudos_2[id_conteudo].titulo}")
                 else:
-                    print("Conteúdo não encontrado.")
+                    print("Conteúdo não encontrado ou acesso não permitido.")
             else:
                 print("Erro: Usuário não logado.")
 
@@ -108,6 +112,8 @@ def main():
                 generos_existentes = set()
                 for conteudo in conteudos.values():
                     generos_existentes.update(conteudo.generos)
+                for conteudo in conteudos_2.values():
+                    generos_existentes.update(conteudo.generos)
 
                 if genero not in generos_existentes:
                     print("Gênero inválido. Por favor, escolha um gênero existente.")
@@ -125,7 +131,8 @@ def main():
 
         elif escolha == '11':
             if usuario_logado:
-                historico = [conteudos[id].titulo for id in usuario_logado.historico]
+                historico = [conteudos[id].titulo for id in usuario_logado.historico if id in conteudos]
+                historico += [conteudos_2[id].titulo for id in usuario_logado.historico if id in conteudos_2]
                 print("Histórico de visualizações:", ', '.join(historico))
             else:
                 print("Erro: Usuário não logado.")
@@ -133,6 +140,8 @@ def main():
         elif escolha == '12':
             if usuario_logado:
                 recomendados = recomendar_conteudos(usuario_logado, conteudos)
+                if usuario_logado.tipo_assinatura == 'premium':
+                    recomendados += recomendar_conteudos(usuario_logado, conteudos_2)
                 if recomendados:
                     print("Conteúdos recomendados:")
                     for rec in recomendados:
@@ -143,7 +152,15 @@ def main():
                 print("Erro: Usuário não logado.")
 
         elif escolha == '13':
-            salvar_dados(usuarios, conteudos)
+            if usuario_logado and usuario_logado.tipo_assinatura == 'premium':
+                conteudos_list = listar_conteudos(conteudos_2)
+                for conteudo in conteudos_list:
+                    print(conteudo)
+            else:
+                print("Acesso negado. Apenas para usuários com assinatura premium.")
+
+        elif escolha == '14':
+            salvar_dados(usuarios, conteudos, conteudos_2)
             print("Saindo do sistema...")
             break
 

@@ -7,7 +7,7 @@ from conteudo import Conteudo
 BASE_DIR = os.path.dirname(__file__)
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
-def salvar_dados(usuarios, conteudos):
+def salvar_dados(usuarios, conteudos, conteudos_2):
     # Criar o diretório data se não existir
     if not os.path.exists(DATA_DIR):
         os.makedirs(DATA_DIR)
@@ -21,6 +21,11 @@ def salvar_dados(usuarios, conteudos):
     conteudos_data = [conteudo.__dict__ for conteudo in conteudos.values()]
     with open(os.path.join(DATA_DIR, 'conteudos.json'), 'w', encoding='utf-8') as f:
         json.dump(conteudos_data, f, ensure_ascii=False, indent=4)
+
+    # Converter objetos Conteudo_2 para dicionários e salvar no arquivo JSON
+    conteudos_2_data = [conteudo.__dict__ for conteudo in conteudos_2.values()]
+    with open(os.path.join(DATA_DIR, 'conteudos_2.json'), 'w', encoding='utf-8') as f:
+        json.dump(conteudos_2_data, f, ensure_ascii=False, indent=4)
 
 def carregar_dados():
     try:
@@ -36,5 +41,12 @@ def carregar_dados():
             conteudos = {c['id']: Conteudo(**c) for c in conteudos_data}
     except FileNotFoundError:
         conteudos = {}
+
+    try:
+        with open(os.path.join(DATA_DIR, 'conteudos_2.json'), 'r', encoding='utf-8') as f:
+            conteudos_2_data = json.load(f)
+            conteudos_2 = {c['id']: Conteudo(**c) for c in conteudos_2_data}
+    except FileNotFoundError:
+        conteudos_2 = {}
     
-    return usuarios, conteudos
+    return usuarios, conteudos, conteudos_2
