@@ -1,60 +1,47 @@
 from usuario import Usuario
 
-def cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura):
-    if tipo_assinatura in ['b', 'p']:
-        tipo_assinatura = 'básica' if tipo_assinatura == 'b' else 'premium'
-        id_usuario = max(usuarios.keys(), default=0) + 1
-        usuario = Usuario(id_usuario, nome, email, senha, tipo_assinatura)
-        usuarios[id_usuario] = usuario
-        return True
-    else:
-        return False
+def cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura, tipo_user='usuário'):
+    if tipo_assinatura not in ['b', 'p']:
+        return None
+    tipo_assinatura = 'básica' if tipo_assinatura == 'b' else 'premium'
+    id_usuario = max(usuarios.keys(), default=0) + 1
+    usuarios[id_usuario] = Usuario(id_usuario, nome, email, senha, tipo_assinatura, tipo_user=tipo_user)
+    return id_usuario
 
 def login_usuario(usuarios, email, senha):
-    email = email.lower()
-    print(f"Tentativa de login: {email}, {senha}")
-    for usuario in usuarios.values():
-        print(f"Verificando usuário: {usuario.email}, {usuario.senha}")
+    for id, usuario in usuarios.items():
         if usuario.email == email and usuario.senha == senha:
-            print("Login bem-sucedido para o usuário:", usuario.nome)
             return usuario
     return None
 
-def excluir_usuario(usuarios, usuario):
-    if usuario:
-        del usuarios[usuario.id]
+def excluir_usuario(usuarios, id_usuario):
+    if id_usuario in usuarios:
+        del usuarios[id_usuario]
         return True
     return False
 
 def alterar_senha(usuario, nova_senha):
-    usuario.senha = nova_senha
+    usuario.alterar_senha(nova_senha)
 
 def adicionar_preferencia(usuario, genero):
-    if genero not in usuario.preferencias:
-        usuario.preferencias.append(genero)
+    usuario.adicionar_preferencia(genero)
 
 def remover_preferencia(usuario, genero):
-    if genero in usuario.preferencias:
-        usuario.preferencias.remove(genero)
+    usuario.remover_preferencia(genero)
 
 def adicionar_historico(usuario, id_conteudo):
-    usuario.historico.append(id_conteudo)
-    usuario.historico = usuario.historico[-3:]
+    usuario.adicionar_historico(id_conteudo)
 
 def listar_conteudos(conteudos):
     conteudo_info = []
-    for conteudo in conteudos.values():
-        conteudo_info.append(f"ID: {conteudo.id}, Título: {conteudo.titulo}, Tipo: {conteudo.tipo}, Descrição: {conteudo.descricao}")
+    for id, conteudo in conteudos.items():
+        conteudo_info.append(f"ID: {id}, Título: {conteudo.titulo}, Tipo: {conteudo.tipo}, Descrição: {conteudo.descricao}")
     return conteudo_info
 
 def recomendar_conteudos(usuario, conteudos):
-    if not usuario.preferencias:
-        return []
-
+    preferencias = usuario.preferencias
     recomendados = []
-    for conteudo in conteudos.values():
-        if any(genero in conteudo.generos for genero in usuario.preferencias):
-            recomendados.append(f"ID: {conteudo.id}, Título: {conteudo.titulo}, Tipo: {conteudo.tipo}, Descrição: {conteudo.descricao}")
-
+    for id_conteudo, conteudo in conteudos.items():
+        if any(genero in conteudo.generos for genero in preferencias):
+            recomendados.append(f"ID: {id_conteudo}, Título: {conteudo.titulo}, Tipo: {conteudo.tipo}, Descrição: {conteudo.descricao}")
     return recomendados
-

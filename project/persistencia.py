@@ -34,6 +34,7 @@ def carregar_dados():
             usuarios_data = json.load(f)
             usuarios = {u['id']: Usuario(**u) for u in usuarios_data}
     except FileNotFoundError:
+        print("'usuarios.json' não encontrado.")
         usuarios = {}
     except Exception as e:
         print(f"Erro ao carregar 'usuarios.json': {e}")
@@ -47,6 +48,7 @@ def carregar_dados():
             conteudos_data = json.load(f)
             conteudos = {c['id']: Conteudo(**c) for c in conteudos_data}
     except FileNotFoundError:
+        print("'conteudos.json' não encontrado.")
         conteudos = {}
     except Exception as e:
         print(f"Erro ao carregar 'conteudos.json': {e}")
@@ -60,6 +62,7 @@ def carregar_dados():
             conteudos_2_data = json.load(f)
             conteudos_2 = {c['id']: Conteudo(**c) for c in conteudos_2_data}
     except FileNotFoundError:
+        print("'conteudos_2.json' não encontrado.")
         conteudos_2 = {}
     except Exception as e:
         print(f"Erro ao carregar 'conteudos_2.json': {e}")

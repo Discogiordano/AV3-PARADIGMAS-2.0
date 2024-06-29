@@ -4,7 +4,7 @@ from usuario_funcoes import (cadastrar_usuario, login_usuario, excluir_usuario, 
 from persistencia import salvar_dados, carregar_dados
 
 def main():
-    print("Carregando dados...")
+    print("Iniciando o sistema...")
     usuarios, conteudos, conteudos_2 = carregar_dados()
     print("Dados carregados com sucesso.")
     usuario_logado = None
@@ -32,7 +32,8 @@ def main():
             email = input("Email: ")
             senha = input("Senha: ")
             tipo_assinatura = input("Tipo de Assinatura (básica, premium) (b/p): ")
-            if cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura):
+            tipo_user = input("Tipo de Usuário (usuário, administrador): ")
+            if cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura, tipo_user):
                 print("Usuário cadastrado com sucesso!")
             else:
                 print("Erro de cadastro")
@@ -47,11 +48,11 @@ def main():
                 print("Email ou senha incorretos.")
 
         elif escolha == '3':
-            if usuario_logado and excluir_usuario(usuarios, usuario_logado):
+            if usuario_logado and excluir_usuario(usuarios, usuario_logado.id):
                 print("Usuário excluído com sucesso.")
                 usuario_logado = None
             else:
-                print("Erro: Usuário não logado.")
+                print("Erro: Usuário não logado ou não autorizado.")
 
         elif escolha == '4':
             if usuario_logado:
