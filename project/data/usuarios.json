@@ -55,5 +55,15 @@
         ],
         "historico": [],
         "tipo_user": "administrador"
+    },
+    {
+        "id": 5,
+        "nome": "fff",
+        "email": "fff@hotmail..com",
+        "senha": "senha1234",
+        "tipo_assinatura": "premium",
+        "preferencias": [],
+        "historico": [],
+        "tipo_user": "usuário"
     }
 ]
