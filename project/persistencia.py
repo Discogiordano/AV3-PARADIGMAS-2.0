@@ -3,71 +3,77 @@ import os
 from usuario import Usuario
 from conteudo import Conteudo
 
-# Definir o caminho da pasta data dentro do diretório project
-BASE_DIR = os.path.dirname(__file__)
-DATA_DIR = os.path.join(BASE_DIR, 'data')
-
 def salvar_dados(usuarios, conteudos, conteudos_2):
-    # Criar o diretório data se não existir
-    if not os.path.exists(DATA_DIR):
-        os.makedirs(DATA_DIR)
+    base_dir = os.path.dirname(__file__)
+    data_dir = os.path.join(base_dir, 'data')
 
-    # Converter objetos Usuario para dicionários e salvar no arquivo JSON
-    usuarios_data = [usuario.__dict__ for usuario in usuarios.values()]
-    with open(os.path.join(DATA_DIR, 'usuarios.json'), 'w', encoding='utf-8') as f:
-        json.dump(usuarios_data, f, ensure_ascii=False, indent=4)
+    print("Salvando dados dos usuários...")
+    with open(os.path.join(data_dir, 'usuarios.json'), 'w', encoding='utf-8') as f:
+        json.dump([usuario.__dict__ for usuario in usuarios.values()], f, ensure_ascii=False, indent=4)
+    print("Dados dos usuários salvos.")
 
-    # Converter objetos Conteudo para dicionários e salvar no arquivo JSON
-    conteudos_data = [conteudo.__dict__ for conteudo in conteudos.values()]
-    with open(os.path.join(DATA_DIR, 'conteudos.json'), 'w', encoding='utf-8') as f:
-        json.dump(conteudos_data, f, ensure_ascii=False, indent=4)
+    print("Salvando dados dos conteúdos...")
+    with open(os.path.join(data_dir, 'conteudos.json'), 'w', encoding='utf-8') as f:
+        json.dump([conteudo.__dict__ for conteudo in conteudos.values()], f, ensure_ascii=False, indent=4)
+    print("Dados dos conteúdos salvos.")
 
-    # Converter objetos Conteudo_2 para dicionários e salvar no arquivo JSON
-    conteudos_2_data = [conteudo.__dict__ for conteudo in conteudos_2.values()]
-    with open(os.path.join(DATA_DIR, 'conteudos_2.json'), 'w', encoding='utf-8') as f:
-        json.dump(conteudos_2_data, f, ensure_ascii=False, indent=4)
+    print("Salvando dados dos conteúdos 2...")
+    with open(os.path.join(data_dir, 'conteudos_2.json'), 'w', encoding='utf-8') as f:
+        json.dump([conteudo.__dict__ for conteudo in conteudos_2.values()], f, ensure_ascii=False, indent=4)
+    print("Dados dos conteúdos 2 salvos.")
 
 def carregar_dados():
-    print("Carregando dados de 'usuarios.json'...")
+    base_dir = os.path.dirname(__file__)
+    data_dir = os.path.join(base_dir, 'data')
+    
+    if not os.path.exists(data_dir):
+        print(f"Criando diretório: {data_dir}")
+        os.makedirs(data_dir)
+
+    usuarios = {}
+    conteudos = {}
+    conteudos_2 = {}
+
     try:
-        with open(os.path.join(DATA_DIR, 'usuarios.json'), 'r', encoding='utf-8') as f:
+        print("Carregando dados de 'usuarios.json'...")
+        with open(os.path.join(data_dir, 'usuarios.json'), 'r', encoding='utf-8') as f:
             usuarios_data = json.load(f)
-            usuarios = {u['id']: Usuario(**u) for u in usuarios_data}
+            for data in usuarios_data:
+                usuarios[data['id']] = Usuario(**data)
+        print("Usuários carregados.")
     except FileNotFoundError:
-        print("'usuarios.json' não encontrado.")
-        usuarios = {}
+        print(f"Arquivo 'usuarios.json' não encontrado. Criando um arquivo vazio.")
+        with open(os.path.join(data_dir, 'usuarios.json'), 'w', encoding='utf-8') as f:
+            json.dump([], f)
     except Exception as e:
         print(f"Erro ao carregar 'usuarios.json': {e}")
-        usuarios = {}
 
-    print("Usuários carregados:", usuarios)
-
-    print("Carregando dados de 'conteudos.json'...")
     try:
-        with open(os.path.join(DATA_DIR, 'conteudos.json'), 'r', encoding='utf-8') as f:
+        print("Carregando dados de 'conteudos.json'...")
+        with open(os.path.join(data_dir, 'conteudos.json'), 'r', encoding='utf-8') as f:
             conteudos_data = json.load(f)
-            conteudos = {c['id']: Conteudo(**c) for c in conteudos_data}
+            for data in conteudos_data:
+                conteudos[data['id']] = Conteudo(**data)
+        print("Conteúdos carregados.")
     except FileNotFoundError:
-        print("'conteudos.json' não encontrado.")
-        conteudos = {}
+        print(f"Arquivo 'conteudos.json' não encontrado. Criando um arquivo vazio.")
+        with open(os.path.join(data_dir, 'conteudos.json'), 'w', encoding='utf-8') as f:
+            json.dump([], f)
     except Exception as e:
         print(f"Erro ao carregar 'conteudos.json': {e}")
-        conteudos = {}
 
-    print("Conteúdos carregados:", conteudos)
-
-    print("Carregando dados de 'conteudos_2.json'...")
     try:
-        with open(os.path.join(DATA_DIR, 'conteudos_2.json'), 'r', encoding='utf-8') as f:
+        print("Carregando dados de 'conteudos_2.json'...")
+        with open(os.path.join(data_dir, 'conteudos_2.json'), 'r', encoding='utf-8') as f:
             conteudos_2_data = json.load(f)
-            conteudos_2 = {c['id']: Conteudo(**c) for c in conteudos_2_data}
+            for data in conteudos_2_data:
+                conteudos_2[data['id']] = Conteudo(**data)
+        print("Conteúdos 2 carregados.")
     except FileNotFoundError:
-        print("'conteudos_2.json' não encontrado.")
-        conteudos_2 = {}
+        print(f"Arquivo 'conteudos_2.json' não encontrado. Criando um arquivo vazio.")
+        with open(os.path.join(data_dir, 'conteudos_2.json'), 'w', encoding='utf-8') as f:
+            json.dump([], f)
     except Exception as e:
         print(f"Erro ao carregar 'conteudos_2.json': {e}")
-        conteudos_2 = {}
 
-    print("Conteúdos 2 carregados:", conteudos_2)
-    
     return usuarios, conteudos, conteudos_2

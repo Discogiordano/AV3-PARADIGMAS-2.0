@@ -9,17 +9,4 @@ class Usuario:
         self.historico = historico if historico is not None else []
         self.tipo_user = tipo_user
 
-    def alterar_senha(self, nova_senha):
-        self.senha = nova_senha
-
-    def adicionar_preferencia(self, genero):
-        if genero not in self.preferencias:
-            self.preferencias.append(genero)
-
-    def remover_preferencia(self, genero):
-        if genero in self.preferencias:
-            self.preferencias.remove(genero)
-
-    def adicionar_historico(self, id_conteudo):
-        self.historico.append(id_conteudo)
-        self.historico = self.historico[-3:]  # Manter apenas os três últimos itens
+ 

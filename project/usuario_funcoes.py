@@ -1,18 +1,18 @@
 from usuario import Usuario
 from conteudo import Conteudo
 
-def cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura, tipo_user='usuário'):
-    if tipo_assinatura not in ['b', 'p']:
-        return None
-    tipo_assinatura = 'básica' if tipo_assinatura == 'b' else 'premium'
-    id_usuario = max(usuarios.keys(), default=0) + 1
-    usuarios[id_usuario] = Usuario(id_usuario, nome, email, senha, tipo_assinatura, tipo_user=tipo_user)
-    return id_usuario
+def cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura):
+    if email in [user.email for user in usuarios.values()]:
+        return False
+    novo_id = obter_proximo_id(usuarios)
+    novo_usuario = Usuario(novo_id, nome, email, senha, tipo_assinatura)
+    usuarios[novo_id] = novo_usuario
+    return True
 
 def login_usuario(usuarios, email, senha):
-    for id, usuario in usuarios.items():
-        if usuario.email == email and usuario.senha == senha:
-            return usuario
+    for user in usuarios.values():
+        if user.email == email and user.senha == senha:
+            return user
     return None
 
 def excluir_usuario(usuarios, id_usuario):
@@ -22,39 +22,43 @@ def excluir_usuario(usuarios, id_usuario):
     return False
 
 def alterar_senha(usuario, nova_senha):
-    usuario.alterar_senha(nova_senha)
+    usuario.senha = nova_senha
 
-def adicionar_preferencia(usuario, genero):
-    usuario.adicionar_preferencia(genero)
-
-def remover_preferencia(usuario, genero):
-    usuario.remover_preferencia(genero)
 
 def adicionar_historico(usuario, id_conteudo):
-    usuario.adicionar_historico(id_conteudo)
+    if id_conteudo not in usuario.historico:
+        usuario.historico.append(id_conteudo)
+        
+def adicionar_preferencia(usuario, genero):
+    if genero not in usuario.preferencias:
+        usuario.preferencias.append(genero)
+        print(f"Preferência '{genero}' adicionada para o usuário '{usuario.nome}'.")
 
-def listar_conteudos(conteudos):
-    conteudo_info = []
-    for id, conteudo in conteudos.items():
-        conteudo_info.append(f"ID: {id}, Título: {conteudo.titulo}, Tipo: {conteudo.tipo}, Descrição: {conteudo.descricao}")
-    return conteudo_info
+def remover_preferencia(usuario, genero):
+    if genero in usuario.preferencias:
+        usuario.preferencias.remove(genero)
+        print(f"Preferência '{genero}' removida para o usuário '{usuario.nome}'.")
 
 def recomendar_conteudos(usuario, conteudos):
-    preferencias = usuario.preferencias
     recomendados = []
-    for id_conteudo, conteudo in conteudos.items():
-        if any(genero in conteudo.generos for genero in preferencias):
-            recomendados.append(f"ID: {id_conteudo}, Título: {conteudo.titulo}, Tipo: {conteudo.tipo}, Descrição: {conteudo.descricao}")
+    for conteudo in conteudos.values():
+        for genero in conteudo.generos:
+            if genero in usuario.preferencias:
+                recomendados.append(conteudo)
+                break
     return recomendados
 
-# Funções para gerenciamento de usuários pelo administrador
+def listar_conteudos(conteudos):
+    return [f"ID: {conteudo.id}, Título: {conteudo.titulo}" for conteudo in conteudos.values()]
+
+
 def buscar_usuario_por_email(usuarios, email):
-    for usuario in usuarios.values():
-        if usuario.email == email:
-            return usuario
+    for user in usuarios.values():
+        if user.email == email:
+            return user
     return None
 
-def alterar_dados_usuario(usuario, nome=None, email=None, senha=None, tipo_assinatura=None, tipo_user=None):
+def alterar_dados_usuario(usuario, nome, email, senha, tipo_assinatura, tipo_user):
     if nome:
         usuario.nome = nome
     if email:
@@ -66,28 +70,31 @@ def alterar_dados_usuario(usuario, nome=None, email=None, senha=None, tipo_assin
     if tipo_user:
         usuario.tipo_user = tipo_user
 
-# Função para obter o próximo ID disponível em um dicionário de conteúdos
-def obter_proximo_id(conteudos):
-    return max(conteudos.keys(), default=0) + 1
-
-# Funções para gerenciamento de conteúdos pelo administrador
 def adicionar_conteudo(conteudos, titulo, descricao, tipo, generos):
-    id_conteudo = obter_proximo_id(conteudos)
-    conteudos[id_conteudo] = Conteudo(id_conteudo, titulo, descricao, tipo, generos)
+    novo_id = obter_proximo_id(conteudos)
+    novo_conteudo = Conteudo(novo_id, titulo, descricao, tipo, generos)
+    conteudos[novo_id] = novo_conteudo
 
-def alterar_conteudo(conteudos, id, titulo=None, descricao=None, tipo=None, generos=None):
-    if id in conteudos:
+def alterar_conteudo(conteudos, id_conteudo, titulo, descricao, tipo, generos):
+    conteudo = conteudos.get(id_conteudo)
+    if conteudo:
         if titulo:
-            conteudos[id].titulo = titulo
+            conteudo.titulo = titulo
         if descricao:
-            conteudos[id].descricao = descricao
+            conteudo.descricao = descricao
         if tipo:
-            conteudos[id].tipo = tipo
+            conteudo.tipo = tipo
         if generos:
-            conteudos[id].generos = generos
+            conteudo.generos = generos
 
-def excluir_conteudo(conteudos, id):
-    if id in conteudos:
-        del conteudos[id]
+def excluir_conteudo(conteudos, id_conteudo):
+    if id_conteudo in conteudos:
+        del conteudos[id_conteudo]
         return True
     return False
+
+def obter_proximo_id(dicionario):
+    if not dicionario:
+        return 1
+    else:
+        return max(dicionario.keys()) + 1

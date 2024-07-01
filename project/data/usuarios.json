@@ -13,7 +13,8 @@
         "historico": [
             1,
             2,
-            3
+            3,
+            23
         ],
         "tipo_user": "usuário"
     },
@@ -58,10 +59,10 @@
     },
     {
         "id": 5,
-        "nome": "fff",
-        "email": "fff@hotmail..com",
-        "senha": "senha1234",
-        "tipo_assinatura": "premium",
+        "nome": "ddd",
+        "email": "ddd@gmail.com",
+        "senha": "senha12345",
+        "tipo_assinatura": "b",
         "preferencias": [],
         "historico": [],
         "tipo_user": "usuário"

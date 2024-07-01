@@ -207,5 +207,15 @@
         "generos": [
             "comédia"
         ]
+    },
+    {
+        "id": 28,
+        "titulo": "asd",
+        "descricao": "sdsd",
+        "tipo": "série",
+        "generos": [
+            "terror",
+            " comédia"
+        ]
     }
 ]
