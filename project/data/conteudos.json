@@ -1,0 +1,64 @@
+[
+    {
+        "id": 1,
+        "titulo": "Harry Potter",
+        "descricao": "Mundo Mágico de fantasias",
+        "tipo": "filme",
+        "generos": [
+            "aventura",
+            "fantasia"
+        ]
+    },
+    {
+        "id": 2,
+        "titulo": "Dexter",
+        "descricao": "Uma intrigante série de investigação",
+        "tipo": "série",
+        "generos": [
+            "drama",
+            "suspense"
+        ]
+    },
+    {
+        "id": 3,
+        "titulo": "Naruto",
+        "descricao": "Ação no mundo ninja",
+        "tipo": "animação",
+        "generos": [
+            "animação",
+            "ação",
+            "drama"
+        ]
+    },
+    {
+        "id": 4,
+        "titulo": "Game of Thrones",
+        "descricao": "Aventura em fantasia medieval",
+        "tipo": "série",
+        "generos": [
+            "aventura",
+            "ação",
+            "fantasia"
+        ]
+    },
+    {
+        "id": 5,
+        "titulo": "Alien",
+        "descricao": "Terror de ficção científica no espaço sideral",
+        "tipo": "filme",
+        "generos": [
+            "ficção científica",
+            "mistério",
+            "terror"
+        ]
+    },
+    {
+        "id": 6,
+        "titulo": "As Branquelas",
+        "descricao": "Comédia besteirol",
+        "tipo": "filme",
+        "generos": [
+            "comédia"
+        ]
+    }
+]

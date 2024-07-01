@@ -1,0 +1,221 @@
+[
+    {
+        "id": 7,
+        "titulo": "Inception",
+        "descricao": "Sonhos dentro de sonhos",
+        "tipo": "filme",
+        "generos": [
+            "ficção científica",
+            "ação"
+        ]
+    },
+    {
+        "id": 8,
+        "titulo": "The Matrix",
+        "descricao": "A realidade simulada",
+        "tipo": "filme",
+        "generos": [
+            "ficção científica",
+            "ação"
+        ]
+    },
+    {
+        "id": 9,
+        "titulo": "Interstellar",
+        "descricao": "Viagem no espaço-tempo",
+        "tipo": "filme",
+        "generos": [
+            "ficção científica",
+            "drama"
+        ]
+    },
+    {
+        "id": 10,
+        "titulo": "The Shawshank Redemption",
+        "descricao": "Liberdade através da perseverança",
+        "tipo": "filme",
+        "generos": [
+            "drama"
+        ]
+    },
+    {
+        "id": 11,
+        "titulo": "The Dark Knight",
+        "descricao": "O cavaleiro das trevas luta contra o crime",
+        "tipo": "filme",
+        "generos": [
+            "ação",
+            "drama"
+        ]
+    },
+    {
+        "id": 12,
+        "titulo": "Pulp Fiction",
+        "descricao": "Histórias interligadas de crime",
+        "tipo": "filme",
+        "generos": [
+            "crime",
+            "drama"
+        ]
+    },
+    {
+        "id": 13,
+        "titulo": "Fight Club",
+        "descricao": "Clube de luta clandestino",
+        "tipo": "filme",
+        "generos": [
+            "drama"
+        ]
+    },
+    {
+        "id": 14,
+        "titulo": "Forrest Gump",
+        "descricao": "A vida de Forrest Gump",
+        "tipo": "filme",
+        "generos": [
+            "drama",
+            "comédia"
+        ]
+    },
+    {
+        "id": 15,
+        "titulo": "Gladiator",
+        "descricao": "O gladiador em busca de vingança",
+        "tipo": "filme",
+        "generos": [
+            "ação",
+            "drama"
+        ]
+    },
+    {
+        "id": 16,
+        "titulo": "Saving Private Ryan",
+        "descricao": "Resgate na Segunda Guerra Mundial",
+        "tipo": "filme",
+        "generos": [
+            "ação",
+            "drama",
+            "guerra"
+        ]
+    },
+    {
+        "id": 17,
+        "titulo": "Schindler's List",
+        "descricao": "A história de Oskar Schindler",
+        "tipo": "filme",
+        "generos": [
+            "drama",
+            "histórico"
+        ]
+    },
+    {
+        "id": 18,
+        "titulo": "Braveheart",
+        "descricao": "A luta pela liberdade da Escócia",
+        "tipo": "filme",
+        "generos": [
+            "ação",
+            "drama",
+            "histórico"
+        ]
+    },
+    {
+        "id": 19,
+        "titulo": "The Lion King",
+        "descricao": "O rei leão em busca de seu destino",
+        "tipo": "animação",
+        "generos": [
+            "animação",
+            "drama"
+        ]
+    },
+    {
+        "id": 20,
+        "titulo": "Titanic",
+        "descricao": "Romance no trágico naufrágio",
+        "tipo": "filme",
+        "generos": [
+            "drama",
+            "romance"
+        ]
+    },
+    {
+        "id": 21,
+        "titulo": "Avatar",
+        "descricao": "A luta por Pandora",
+        "tipo": "filme",
+        "generos": [
+            "ficção científica",
+            "ação"
+        ]
+    },
+    {
+        "id": 22,
+        "titulo": "The Godfather",
+        "descricao": "A saga da família Corleone",
+        "tipo": "filme",
+        "generos": [
+            "crime",
+            "drama"
+        ]
+    },
+    {
+        "id": 23,
+        "titulo": "The Godfather: Part II",
+        "descricao": "A continuação da saga Corleone",
+        "tipo": "filme",
+        "generos": [
+            "crime",
+            "drama"
+        ]
+    },
+    {
+        "id": 24,
+        "titulo": "The Lord of the Rings: The Fellowship of the Ring",
+        "descricao": "A jornada para destruir o anel",
+        "tipo": "filme",
+        "generos": [
+            "aventura",
+            "fantasia"
+        ]
+    },
+    {
+        "id": 25,
+        "titulo": "The Lord of the Rings: The Two Towers",
+        "descricao": "A continuação da jornada",
+        "tipo": "filme",
+        "generos": [
+            "aventura",
+            "fantasia"
+        ]
+    },
+    {
+        "id": 26,
+        "titulo": "The Lord of the Rings: The Return of the King",
+        "descricao": "A conclusão da jornada",
+        "tipo": "filme",
+        "generos": [
+            "aventura",
+            "fantasia"
+        ]
+    },
+    {
+        "id": 27,
+        "titulo": "Monty Python",
+        "descricao": "Comédia besteirol paródica",
+        "tipo": "filme",
+        "generos": [
+            "comédia"
+        ]
+    },
+    {
+        "id": 28,
+        "titulo": "asd",
+        "descricao": "sdsd",
+        "tipo": "série",
+        "generos": [
+            "terror",
+            " comédia"
+        ]
+    }
+]
