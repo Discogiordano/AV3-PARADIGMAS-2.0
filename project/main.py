@@ -1,6 +1,7 @@
 from usuario_funcoes import (cadastrar_usuario, login_usuario, excluir_usuario, alterar_senha,
                              adicionar_preferencia, remover_preferencia, adicionar_historico, 
-                             listar_conteudos, recomendar_conteudos)
+                             listar_conteudos, recomendar_conteudos, buscar_usuario_por_email,
+                             alterar_dados_usuario, adicionar_conteudo, alterar_conteudo, excluir_conteudo, obter_proximo_id)
 from persistencia import salvar_dados, carregar_dados
 
 def main():
@@ -24,7 +25,9 @@ def main():
         print("11. Ver Histórico")
         print("12. Recomendação por preferência")
         print("13. Listar Conteúdos Premium")
-        print("14. Sair")
+        print("14. Gerenciamento de Usuários (Admin)")
+        print("15. Gerenciamento de Conteúdos (Admin)")
+        print("16. Sair")
         escolha = input("Escolha uma opção: ")
 
         if escolha == '1':
@@ -32,8 +35,7 @@ def main():
             email = input("Email: ")
             senha = input("Senha: ")
             tipo_assinatura = input("Tipo de Assinatura (básica, premium) (b/p): ")
-            tipo_user = input("Tipo de Usuário (usuário, administrador): ")
-            if cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura, tipo_user):
+            if cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura):
                 print("Usuário cadastrado com sucesso!")
             else:
                 print("Erro de cadastro")
@@ -163,6 +165,128 @@ def main():
                 print("Acesso negado. Apenas para usuários com assinatura premium.")
 
         elif escolha == '14':
+            if usuario_logado and usuario_logado.tipo_user == 'administrador':
+                while True:
+                    print("\nGerenciamento de Usuários (Admin):")
+                    print("1. Buscar Usuário por Email")
+                    print("2. Alterar Dados de Usuário")
+                    print("3. Adicionar Novo Usuário")
+                    print("4. Excluir Usuário")
+                    print("5. Voltar")
+                    opcao_admin_usuarios = input("Escolha uma opção: ")
+
+                    if opcao_admin_usuarios == '1':
+                        email = input("Email do usuário: ")
+                        usuario_encontrado = buscar_usuario_por_email(usuarios, email)
+                        if usuario_encontrado:
+                            print(f"Usuário encontrado: {usuario_encontrado.__dict__}")
+                        else:
+                            print("Usuário não encontrado.")
+
+                    elif opcao_admin_usuarios == '2':
+                        email = input("Email do usuário para alterar: ")
+                        usuario_encontrado = buscar_usuario_por_email(usuarios, email)
+                        if usuario_encontrado:
+                            nome = input("Novo Nome (deixe em branco para manter o atual): ")
+                            novo_email = input("Novo Email (deixe em branco para manter o atual): ")
+                            senha = input("Nova Senha (deixe em branco para manter a atual): ")
+                            tipo_assinatura = input("Novo Tipo de Assinatura (básica, premium) (deixe em branco para manter o atual): ")
+                            tipo_user = input("Novo Tipo de Usuário (usuário, administrador) (deixe em branco para manter o atual): ")
+                            alterar_dados_usuario(usuario_encontrado, nome, novo_email, senha, tipo_assinatura, tipo_user)
+                            print("Dados do usuário alterados com sucesso.")
+                        else:
+                            print("Usuário não encontrado.")
+
+                    elif opcao_admin_usuarios == '3':
+                        nome = input("Nome: ")
+                        email = input("Email: ")
+                        senha = input("Senha: ")
+                        tipo_assinatura = input("Tipo de Assinatura (básica, premium) (b/p): ")
+                        if cadastrar_usuario(usuarios, nome, email, senha, tipo_assinatura):
+                            print("Usuário cadastrado com sucesso!")
+                        else:
+                            print("Erro de cadastro")
+
+                    elif opcao_admin_usuarios == '4':
+                        email = input("Email do usuário para excluir: ")
+                        usuario_encontrado = buscar_usuario_por_email(usuarios, email)
+                        if usuario_encontrado and excluir_usuario(usuarios, usuario_encontrado.id):
+                            print("Usuário excluído com sucesso.")
+                        else:
+                            print("Erro ao excluir usuário.")
+
+                    elif opcao_admin_usuarios == '5':
+                        break
+
+                    else:
+                        print("Opção inválida. Tente novamente.")
+            else:
+                print("Acesso negado. Apenas para administradores.")
+
+        elif escolha == '15':
+            if usuario_logado and usuario_logado.tipo_user == 'administrador':
+                while True:
+                    print("\nGerenciamento de Conteúdos (Admin):")
+                    print("1. Adicionar Novo Conteúdo")
+                    print("2. Alterar Conteúdo")
+                    print("3. Excluir Conteúdo")
+                    print("4. Voltar")
+                    opcao_admin_conteudos = input("Escolha uma opção: ")
+
+                    if opcao_admin_conteudos == '1':
+                        escolha_conteudo = input("Adicionar conteúdo em (1) conteudos ou (2) conteudos_2: ")
+                        titulo = input("Título: ")
+                        descricao = input("Descrição: ")
+                        tipo = input("Tipo (filme, série, etc.): ")
+                        generos = input("Gêneros (separados por vírgula): ").split(",")
+                        if escolha_conteudo == '1':
+                            adicionar_conteudo(conteudos, titulo, descricao, tipo, generos)
+                        elif escolha_conteudo == '2':
+                            adicionar_conteudo(conteudos_2, titulo, descricao, tipo, generos)
+                        else:
+                            print("Opção inválida.")
+                            continue
+                        print("Conteúdo adicionado com sucesso.")
+
+                    elif opcao_admin_conteudos == '2':
+                        id_conteudo = int(input("ID do Conteúdo para alterar: "))
+                        if id_conteudo in conteudos:
+                            titulo = input("Novo Título (deixe em branco para manter o atual): ")
+                            descricao = input("Nova Descrição (deixe em branco para manter a atual): ")
+                            tipo = input("Novo Tipo (deixe em branco para manter o atual): ")
+                            generos = input("Novos Gêneros (separados por vírgula, deixe em branco para manter os atuais): ")
+                            generos = generos.split(",") if generos else None
+                            alterar_conteudo(conteudos, id_conteudo, titulo, descricao, tipo, generos)
+                            print("Conteúdo alterado com sucesso.")
+                        elif id_conteudo in conteudos_2:
+                            titulo = input("Novo Título (deixe em branco para manter o atual): ")
+                            descricao = input("Nova Descrição (deixe em branco para manter a atual): ")
+                            tipo = input("Novo Tipo (deixe em branco para manter o atual): ")
+                            generos = input("Novos Gêneros (separados por vírgula, deixe em branco para manter os atuais): ")
+                            generos = generos.split(",") if generos else None
+                            alterar_conteudo(conteudos_2, id_conteudo, titulo, descricao, tipo, generos)
+                            print("Conteúdo alterado com sucesso.")
+                        else:
+                            print("Conteúdo não encontrado.")
+
+                    elif opcao_admin_conteudos == '3':
+                        id_conteudo = int(input("ID do Conteúdo para excluir: "))
+                        if excluir_conteudo(conteudos, id_conteudo):
+                            print("Conteúdo excluído com sucesso.")
+                        elif excluir_conteudo(conteudos_2, id_conteudo):
+                            print("Conteúdo excluído com sucesso.")
+                        else:
+                            print("Erro ao excluir conteúdo.")
+
+                    elif opcao_admin_conteudos == '4':
+                        break
+
+                    else:
+                        print("Opção inválida. Tente novamente.")
+            else:
+                print("Acesso negado. Apenas para administradores.")
+
+        elif escolha == '16':
             salvar_dados(usuarios, conteudos, conteudos_2)
             print("Saindo do sistema...")
             break
